@@ -29,7 +29,8 @@ if (useSupabase) {
 // (Not used when Supabase is configured)
 
 app.use(express.json());
-app.use(express.static(__dirname));
+const staticPath = process.env.NODE_ENV === 'production' ? process.cwd() : __dirname;
+app.use(express.static(staticPath));
 
 app.get("/api/config", (req, res) => {
   res.json({
@@ -221,6 +222,12 @@ app.delete("/api/tasks/:id", authenticate, async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
+});
+
+// Catch-all route to serve index.html for any non-API requests
+app.get('*', (req, res) => {
+  const staticPath = process.env.NODE_ENV === 'production' ? process.cwd() : __dirname;
+  res.sendFile(path.join(staticPath, 'index.html'));
 });
 
 app.listen(PORT, "0.0.0.0", () => {
