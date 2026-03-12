@@ -29,7 +29,7 @@ if (useSupabase) {
 // (Not used when Supabase is configured)
 
 app.use(express.json());
-app.use(express.static(__dirname));
+app.use(express.static(process.cwd()));
 
 app.get("/api/config", (req, res) => {
   res.json({
@@ -224,8 +224,13 @@ app.delete("/api/tasks/:id", authenticate, async (req, res) => {
 });
 
 // Catch-all route to serve index.html for any non-API requests
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'index.html'));
+// We exclude requests that look like files (have an extension) to avoid MIME type errors
+app.get('*', (req, res, next) => {
+  if (req.path.includes('.') || req.path.startsWith('/api')) {
+    return next();
+  }
+  const indexPath = path.join(process.cwd(), 'index.html');
+  res.sendFile(indexPath);
 });
 
 app.listen(PORT, "0.0.0.0", () => {
