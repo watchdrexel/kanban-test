@@ -61,7 +61,7 @@ body {
     height: 100%;
     background: rgba(0, 0, 0, 0.85);
     backdrop-filter: blur(8px);
-    display: none; /* Hidden by default */
+    display: flex; /* Show by default until auth state is known */
     align-items: center;
     justify-content: center;
     z-index: 10000;

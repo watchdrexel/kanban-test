@@ -10,7 +10,12 @@
   <body>
     <!-- Auth Overlay -->
     <div id="authOverlay" class="auth-overlay">
-        <div class="auth-card">
+        <div id="appLoading" class="auth-card" style="text-align: center;">
+            <i class="fas fa-circle-notch fa-spin" style="font-size: 3rem; color: var(--accent); margin-bottom: 1.5rem;"></i>
+            <h2>Initializing...</h2>
+            <p style="color: var(--text-muted);">Connecting to Supabase</p>
+        </div>
+        <div class="auth-card" id="authCard" style="display: none;">
             <h2 id="authTitle">Login</h2>
             <form id="authForm">
                 <div id="authMessage" class="auth-message" style="display: none;"></div>

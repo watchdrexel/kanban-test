@@ -16,6 +16,8 @@ const taskForm = document.getElementById('taskForm');
 const modalTitle = document.getElementById('modalTitle');
 
 const authOverlay = document.getElementById('authOverlay');
+const authCard = document.getElementById('authCard');
+const appLoading = document.getElementById('appLoading');
 const authForm = document.getElementById('authForm');
 const authTitle = document.getElementById('authTitle');
 const authSubmit = document.getElementById('authSubmit');
@@ -95,18 +97,25 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
     } catch (err) {
         console.error('Initialization error:', err);
+        showAuthMessage('Failed to initialize application. Please refresh or check your connection.', 'error');
     }
 });
 
 async function handleAuthStateChange(session) {
     user = session?.user || null;
+    
+    // Hide loading, show auth card if needed
+    appLoading.style.display = 'none';
+    
     if (user) {
         authOverlay.style.display = 'none';
+        authCard.style.display = 'none';
         userProfile.style.display = 'block';
         userEmail.textContent = user.email;
         await fetchBoards();
     } else {
         authOverlay.style.display = 'flex';
+        authCard.style.display = 'block';
         userProfile.style.display = 'none';
         boardList.innerHTML = '';
         currentBoardName.textContent = 'Select a Board';
@@ -300,6 +309,10 @@ function showAuthMessage(message, type) {
     msgDiv.textContent = message;
     msgDiv.className = `auth-message ${type}`;
     msgDiv.style.display = 'block';
+    
+    // Ensure auth card is visible if we're showing a message
+    appLoading.style.display = 'none';
+    authCard.style.display = 'block';
 }
 
 logoutBtn.onclick = () => supabase.auth.signOut();
