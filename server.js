@@ -29,7 +29,7 @@ if (useSupabase) {
 // (Not used when Supabase is configured)
 
 app.use(express.json());
-app.use(express.static(process.cwd()));
+app.use(express.static(__dirname));
 
 app.get("/api/config", (req, res) => {
   res.json({
@@ -229,8 +229,7 @@ app.get('*', (req, res, next) => {
   if (req.path.includes('.') || req.path.startsWith('/api')) {
     return next();
   }
-  const indexPath = path.join(process.cwd(), 'index.html');
-  res.sendFile(indexPath);
+  res.sendFile(path.join(__dirname, 'index.html'));
 });
 
 app.listen(PORT, "0.0.0.0", () => {
