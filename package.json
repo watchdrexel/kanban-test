@@ -1,0 +1,20 @@
+{
+  "name": "Minimal Kanban",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "tsx server.js",
+    "start": "node server.js",
+    "build": "echo 'No build step required'",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.45.0",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "tsx": "^4.7.0"
+  },
+  "devDependencies": {
+    "eslint": "^10.0.3"
+  }
+}

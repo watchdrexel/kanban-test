@@ -1,0 +1,5 @@
+{
+  "name": "Minimal Kanban",
+  "description": "A minimalist Kanban board with Supabase integration",
+  "requestFramePermissions": []
+}
