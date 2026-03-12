@@ -70,8 +70,13 @@ document.addEventListener('DOMContentLoaded', async () => {
         const config = await configRes.json();
         
         if (!config.supabaseUrl || !config.supabaseAnonKey) {
-            console.error('Supabase configuration missing. Please set SUPABASE_URL and SUPABASE_ANON_KEY in Secrets.');
-            showAuthMessage('Configuration error. Please check server logs.', 'error');
+            console.error('Supabase configuration missing.');
+            const isVercel = window.location.hostname.includes('vercel.app');
+            const msg = isVercel 
+                ? 'Supabase config missing. Add SUPABASE_URL and SUPABASE_ANON_KEY to Vercel Environment Variables.'
+                : 'Supabase configuration missing. Please set SUPABASE_URL and SUPABASE_ANON_KEY in Secrets.';
+            
+            showAuthMessage(msg, 'error');
             projectInfo.textContent = 'Project: Missing Config';
             projectUrlDisplay.textContent = 'URL: Not configured';
             connectionStatus.textContent = '❌ Disconnected';

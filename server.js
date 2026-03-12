@@ -32,6 +32,7 @@ app.use(express.json());
 app.use(express.static(__dirname));
 
 app.get("/api/config", (req, res) => {
+  console.log("Config requested. URL set:", !!process.env.SUPABASE_URL, "Key set:", !!process.env.SUPABASE_ANON_KEY);
   res.json({
     supabaseUrl: process.env.SUPABASE_URL,
     supabaseAnonKey: process.env.SUPABASE_ANON_KEY
